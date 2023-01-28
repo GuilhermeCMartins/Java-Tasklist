@@ -1,0 +1,5 @@
+function handleCloseEditionDialog() {
+
+	editionDialog.hide();
+
+}

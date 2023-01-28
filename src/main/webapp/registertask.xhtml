@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="resources/css/registerpage.css" />
+	<title>Register</title>
+</h:head>
+<h:body>
+	<div class="container">
+		<div class="table-responsive">
+			<div class="table-wrapper">
+				<f:view transient="true">
+
+
+
+					<h:form styleClass="mainTable" prependId="false" id="editpop">
+
+						<div class="table-title">
+							<div class="row">
+								<div class="col-xs-6">
+									<h2>
+										Register <b>Task</b>
+									</h2>
+								</div>
+								<div class="col-xs-6">
+									<h:commandLink styleClass="btn btn-success" action="list">
+										<i class="material-icons">&#xf0c5;</i>
+										<span>List</span>
+									</h:commandLink>
+								</div>
+							</div>
+						</div>
+
+					</h:form>
+
+					<div class="register">
+						<h:form styleClass="register">
+							<div class="register-row">
+								<div class="msg-container">
+								<h:messages id="messages" globalOnly="true" />
+								<br />
+								<h:message for="deadline" styleClass="msg" />
+								<br />
+								</div>
+
+
+								<h:outputText value="Titulo: " styleClass="register-label" style=""/>
+								<h:inputText value="#{taskBean.task.title}"
+									styleClass="register-input" id="title" />
+
+
+
+								<h:outputText value="Descrição: " styleClass="register-label" />
+								<h:inputTextarea row="10" col="10"
+									styleClass="register-input textArea"
+									value="#{taskBean.task.description}" id="description" />
+
+
+								<h:outputText value="Responsável: " styleClass="register-label" />
+								<h:selectOneMenu styleClass="register-som"
+									value="#{taskBean.task.responsable}">
+									<f:selectItem id="reponsable" itemValue="RESP_CAD"
+										itemLabel="RESP_CAD" />
+								</h:selectOneMenu>
+
+								<h:outputText value="Prioridade: " styleClass="register-label" />
+								<h:selectOneMenu styleClass="register-som"
+									value="#{taskBean.task.priority}">
+									<f:selectItems value="#{taskBean.priorities}" var="p"
+										itemValue="#{p}" itemLabel="#{p.label}" />
+								</h:selectOneMenu>							
+
+								<h:outputText value="Deadline: " styleClass="register-label"
+									id="deadline" />
+								<h:inputText styleClass="register-input"
+									value="#{taskBean.task.deadline}" id="deadline">
+									<f:attribute name="deadLine" value="#{deadline}" />
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:inputText>
+								<h:commandLink styleClass="btn btn-success"
+									action="#{taskBean.submit}">
+									<i class="material-icons">&#xe255;</i>
+									<span>Registrar</span>
+
+								</h:commandLink>
+
+
+
+
+							</div>
+						</h:form>
+					</div>
+
+
+
+				</f:view>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

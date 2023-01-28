@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="resources/css/styledList.css" />
+	<title>List</title>
+</h:head>
+<h:body>
+	<div class="container">
+		<div class="table-responsive">
+			<div class="table-wrapper">
+				<f:view transient="true">
+
+
+
+					<h:form styleClass="mainTable" prependId="false" id="tableEdit">
+
+						<div class="table-title">
+							<div class="row">
+								<div class="col-xs-6">
+									<h2>
+										Manage <b>Tasks</b>
+									</h2>
+								</div>
+								<div class="col-xs-6">
+									<h:commandLink action="registertask"
+										styleClass="btn btn-success">
+										<i class="material-icons">&#xE147;</i>
+										<span>Add New Employee</span>
+									</h:commandLink>
+									<h:commandLink styleClass="btn btn-success"
+										action="#{taskBean.listTasks}">
+										<i class="material-icons">&#xE627;</i>
+										<span>Refresh</span>
+									</h:commandLink>
+								</div>
+							</div>
+						</div>
+
+						<div class="search">
+							<h:form id="taskTable">
+								<div class="search-row">
+
+									<h:column styleClass="search-column">
+										<h:outputLabel value="ID: " styleClass="search-label"
+											id="title" />
+										<h:inputText id="id" value="#{taskBean.task.id}"
+											styleClass="search-input" />
+									</h:column>
+
+									<h:column styleClass="th">
+										<h:outputLabel value="Titulo: " styleClass="search-label"
+											id="title" />
+										<h:inputText id="title" value="#{taskBean.task.title}"
+											styleClass="search-input" />
+									</h:column>
+
+									<h:column styleClass="th">
+										<h:outputText value="Responsável: " styleClass="search-label" />
+										<h:selectOneMenu styleClass="search-som"
+											value="#{taskBean.task.responsable}">
+											<f:selectItem itemLabel="Select One" itemValue="" />
+											<f:selectItem id="reponsable" itemValue="RESP_CAD"
+												itemLabel="RESP_CAD" />
+										</h:selectOneMenu>
+									</h:column>
+
+									<h:column styleClass="th">
+										<h:outputText value="Status: "
+											styleClass="search-label-status" />
+										<h:selectOneMenu styleClass="search-som"
+											value="#{taskBean.task.status}">
+											<f:selectItem itemLabel="Select One" itemValue="" />
+											<f:selectItems value="#{taskBean.status}" var="s"
+												itemValue="#{s}" itemLabel="#{s.label}" />
+										</h:selectOneMenu>
+									</h:column>
+
+
+
+								</div>
+
+
+
+
+							</h:form>
+
+
+							<h:commandLink styleClass="btn btn-success"
+								style="margin-top:-45px"
+								action="#{taskBean.search(taskBean.task)}">
+								<i class="material-icons">&#xe8b6;</i>
+								<span>Search</span>
+							</h:commandLink>
+
+						</div>
+
+
+
+						<h:dataTable id="dtTask" value="#{taskBean.tasks}" var="task"
+							styleClass="table table-striped table-hover">
+							<h:column styleClass="th">
+								<f:facet name="header">
+									<h:outputText value="Titulo" />
+								</f:facet>
+								<h:outputText styleClass="tr" value="#{task.title}" />
+							</h:column>
+
+							<h:column styleClass="th" id="resp">
+								<f:facet name="header">
+									<h:outputText value="Responsável" />
+								</f:facet>
+								<h:outputText styleClass="tr" value="#{task.responsable}" />
+							</h:column>
+
+							<h:column styleClass="th">
+								<f:facet name="header">
+									<h:outputText value="Situação" />
+								</f:facet>
+								<h:outputText styleClass="tr" value="#{task.status}" />
+							</h:column>
+
+
+							<h:column styleClass="th">
+								<f:facet name="header">
+									<h:outputText value="Prioridade" />
+								</f:facet>
+								<h:outputText styleClass="tr" value="#{task.priority}" />
+							</h:column>
+							<h:column styleClass="th">
+								<f:facet name="header">
+									<h:outputText value="Deadline" />
+								</f:facet>
+								<h:outputText styleClass="tr" value="#{task.deadline}">
+									<f:convertDateTime pattern="dd.MM.yyyy" />
+								</h:outputText>
+							</h:column>
+
+							<h:column styleClass="th">
+								<f:facet name="header">
+									<h:outputText value="StartDate" />
+								</f:facet>
+								<h:outputText styleClass="tr" value="#{task.startDate}">
+									<f:convertDateTime pattern="dd.MM.yyyy" />
+								</h:outputText>
+							</h:column>
+
+
+							<h:column styleClass="th">
+								<p:commandLink oncomplete="PF('popupEdit').show()"
+									process="@this" update=":editpop" styleClass="button edit">
+									<f:setPropertyActionListener value="#{task}"
+										target="#{taskBean.task}"></f:setPropertyActionListener>
+									<h:graphicImage>
+										<i class="material-icons" title="Edit">&#xE254;</i>
+									</h:graphicImage>
+								</p:commandLink>
+
+
+								<h:commandLink action="#{taskBean.delete(task)}" update="@resp"
+									styleClass="button delete">
+									<h:graphicImage>
+										<i class="material-icons" title="Delete">&#xE872;</i>
+									</h:graphicImage>
+								</h:commandLink>
+
+								<p:commandLink oncomplete="PF('popupInfo').show()"
+									process="@this" update=":editinfo" styleClass="button info">
+									<f:setPropertyActionListener value="#{task}"
+										target="#{taskBean.task}"></f:setPropertyActionListener>
+									<h:graphicImage>
+										<i class="material-icons" title="Info">&#xe8b6;</i>
+									</h:graphicImage>
+								</p:commandLink>
+
+								<h:commandLink action="#{taskBean.complete(task)}"
+									styleClass="btnComplete"
+									rendered="#{task.status == 'EM_ANDAMENTO'}">
+
+									<h:graphicImage>
+										<i class="material-icons" title="Complete">&#xe92f;</i>
+									</h:graphicImage>
+								</h:commandLink>
+							</h:column>
+
+
+						</h:dataTable>
+
+
+					</h:form>
+
+
+					<p:dialog widgetVar="popupEdit" id="popupEdit" modal="true"
+						closeOnEscape="true" showHeader="false" styleClass="popupEdit">
+						<h:form id="editpop">
+							<div class="buttonholder">
+								<h3>Edit task</h3>
+							</div>
+							<h:messages id="messages" globalOnly="true" />
+							<h:message for="title" />
+							
+							<h:panelGrid columns="2">
+								<h:outputLabel value="Titulo: " styleClass="edit-label"
+									id="title" />
+								<h:inputText value="#{taskBean.task.title}"
+									styleClass="edit-input" required="true"
+									requiredMessage="O título não pode estar vazio." />
+								
+								
+								<h:outputLabel value="Descrição:  " styleClass="edit-label"
+									id="description" />
+								<h:inputTextarea row="10" col="10"
+									value="#{taskBean.task.description}"
+									styleClass="edit-input textArea" />
+								<h:outputText value="Responsável: " styleClass="edit-label" />
+								<h:selectOneMenu value="#{taskBean.task.responsable}"
+									styleClass="edit-som">
+									<f:selectItem id="reponsable" itemValue="RESP_CAD"
+										itemLabel="RESP_CAD" />
+								</h:selectOneMenu>
+
+								<h:outputText value="Prioridade: " styleClass="edit-label" />
+								<h:selectOneMenu value="#{taskBean.task.priority}"
+									styleClass="edit-som">
+									<f:selectItems value="#{taskBean.priorities}" var="p"
+										itemValue="#{p}" itemLabel="#{p.label}" />
+								</h:selectOneMenu>
+								<h:commandButton value="Salvar"
+									action="#{taskBean.edit(taskBean.task)}" styleClass="btn-popup"
+									oncomplete="if (!messages) PF('#popupEdit').hide();" />
+							</h:panelGrid>
+						</h:form>
+					</p:dialog>
+
+					<p:dialog widgetVar="popupInfo" showHeader="false" id="popupInfo"
+						closeOnEscape="true" minWidth="730" minHeight="400" modal="true"
+						styleClass="popupInfo">
+
+
+						<h:form id="editinfo">
+
+							<h:messages id="messages" globalOnly="true" />
+							<h:message for="description" />
+
+							<h:panelGrid columns="1">
+
+								<h:outputLabel value="Descrição:  " styleClass="view-label" />
+
+								<h:outputText value="#{taskBean.task.description}"
+									styleClass="view-input" id="description" />
+
+							</h:panelGrid>
+						</h:form>
+					</p:dialog>
+
+				</f:view>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>
