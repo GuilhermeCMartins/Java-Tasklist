@@ -13,8 +13,8 @@ public class DBConnection {
 			Connection connection = null;
 
 			try {
-				Class.forName("org.postgresql.Driver");
-				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/internTest", "admin", "admin");
+				Class.forName("");
+				connection = DriverManager.getConnection("");
 
 				if(connection != null) {
 					System.out.println("Connection OK");
